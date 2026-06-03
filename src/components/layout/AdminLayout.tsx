@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
+import { APP_VERSION } from '@/version'
 import { useProdutosStore } from '@/stores/produtosStore'
 import { useUsuariosStore } from '@/stores/usuariosStore'
 
@@ -124,6 +125,9 @@ export function AdminLayout() {
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
           {!collapsed && <span>Recolher</span>}
         </button>
+        <p className={cn('text-[10px] text-surface-600 text-center select-none', collapsed && 'hidden')}>
+          v{APP_VERSION}
+        </p>
       </div>
     </div>
   )

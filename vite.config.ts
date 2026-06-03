@@ -4,8 +4,13 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
+const APP_VERSION = '0.1'
+
 export default defineConfig({
   base: '/Maanaim/',
+  define: {
+    __APP_VERSION__: JSON.stringify(APP_VERSION),
+  },
   plugins: [
     react(),
     tailwindcss(),
@@ -40,6 +45,7 @@ export default defineConfig({
         ],
       },
       workbox: {
+        cacheId: `maanaim-v${APP_VERSION}`,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
         runtimeCaching: [
           {

@@ -4,6 +4,7 @@ import { CalendarDays, LogOut, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/authStore'
 import { EQUIPES, type EquipeKey } from '@/types'
+import { APP_VERSION } from '@/version'
 
 const NAV_ITEMS = [
   { to: '/equipe', icon: CalendarDays, label: 'Acontecimentos', end: true },
@@ -65,6 +66,7 @@ export function EquipeLayout() {
           <LogOut size={16} />
           <span>Sair</span>
         </button>
+        <p className="text-[10px] text-surface-600 text-center select-none">v{APP_VERSION}</p>
       </div>
     </div>
   )

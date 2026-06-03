@@ -4,6 +4,7 @@ import { LogIn } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { useAuthStore } from '@/stores/authStore'
+import { APP_VERSION } from '@/version'
 
 export function LoginPage() {
   const [email, setEmail] = useState('')
@@ -27,7 +28,8 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-surface-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-surface-900 flex items-center justify-center p-4 relative">
+      <span className="absolute bottom-3 right-4 text-[10px] text-surface-700 select-none">v{APP_VERSION}</span>
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8 gap-3">

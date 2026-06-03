@@ -1,20 +1,26 @@
 ---
-description: Após qualquer alteração de código, fazer commit, push e deploy automaticamente
+description: Após qualquer alteração de código, incrementar versão, fazer commit, push e deploy automaticamente
 alwaysApply: true
 ---
 
 # Deploy Automático
 
-Sempre que fizer qualquer alteração de código neste projeto, ao final **execute automaticamente** na pasta `maanaim-estoque`:
+Sempre que fizer qualquer alteração de código neste projeto, ao final **execute automaticamente** os passos abaixo.
+
+## 1. Incrementar a versão
+
+Abra `vite.config.ts` e incremente o valor de `APP_VERSION` em `+0.1` (ex: `0.1` → `0.2` → `0.3`).
+
+## 2. Commit, push e deploy
 
 ```bash
 cd /Users/brunosantana/Documents/App/Maanaim/maanaim-estoque
 git add .
-git commit -m "<mensagem descrevendo o que foi alterado>"
+git commit -m "v<nova_versão>: <descrição do que foi alterado>"
 git push
 npm run deploy
 ```
 
-- Use uma mensagem de commit clara e em português descrevendo o que foi mudado.
+- Use uma mensagem de commit clara e em português, prefixada com a nova versão.
 - Rode os comandos em sequência, sem pedir confirmação.
-- Informe o usuário quando o deploy terminar com sucesso.
+- Informe o usuário quando o deploy terminar com sucesso e qual versão foi publicada.
