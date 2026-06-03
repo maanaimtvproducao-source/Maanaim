@@ -126,7 +126,8 @@ export const useAuthStore = create<AuthState>((set) => ({
         'auth/operation-not-allowed': 'Login por e-mail não está habilitado no Firebase. Ative em Authentication → Sign-in method.',
         'auth/invalid-email': 'E-mail inválido.',
       }
-      set({ error: messages[err.code ?? ''] ?? 'Erro ao fazer login.' })
+      console.error('[Auth] Código do erro Firebase:', err.code, e)
+      set({ error: messages[err.code ?? ''] ?? `Erro ao fazer login. (${err.code ?? 'desconhecido'})` })
       throw e
     }
   },
