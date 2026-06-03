@@ -37,25 +37,38 @@ async function fetchUserData(uid: string): Promise<Usuario | null> {
 
 async function seedAdminIfNeeded(): Promise<void> {
   const configRef = ref(rtdb, '/config/adminSeeded')
-  const snap = await fbGet(configRef)
-  if (snap.exists() && snap.val() === true) return
+
+  try {
+    const snap = await fbGet(configRef)
+    if (snap.exists() && snap.val() === true) return
+  } catch {
+    // Sem permissão para ler a config — prossegue e tenta criar o admin mesmo assim
+  }
 
   try {
     const cred = await createUserWithEmailAndPassword(auth, 'admin@admin.com', 'maanaim123')
-    await fbSet(ref(rtdb, `/usuarios/${cred.user.uid}`), {
-      nome: 'Administrador',
-      email: 'admin@admin.com',
-      equipe: 'ADMIN',
-      role: 'admin',
-      aprovado: true,
-      createdAt: getCurrentDateISO(),
-    })
-    await fbSet(configRef, true)
+    try {
+      await fbSet(ref(rtdb, `/usuarios/${cred.user.uid}`), {
+        nome: 'Administrador',
+        email: 'admin@admin.com',
+        equipe: 'ADMIN',
+        role: 'admin',
+        aprovado: true,
+        createdAt: getCurrentDateISO(),
+      })
+      await fbSet(configRef, true)
+    } catch {
+      // Escrita no RTDB negada — usuário foi criado no Auth mas sem registro no banco
+    }
     await firebaseSignOut(auth)
   } catch (e: unknown) {
     const err = e as { code?: string }
     if (err.code === 'auth/email-already-in-use') {
-      await fbSet(configRef, true)
+      try {
+        await fbSet(configRef, true)
+      } catch {
+        // Sem permissão para marcar config — ignora
+      }
     }
   }
 }

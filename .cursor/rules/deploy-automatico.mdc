@@ -1,0 +1,20 @@
+---
+description: Após qualquer alteração de código, fazer commit, push e deploy automaticamente
+alwaysApply: true
+---
+
+# Deploy Automático
+
+Sempre que fizer qualquer alteração de código neste projeto, ao final **execute automaticamente** na pasta `maanaim-estoque`:
+
+```bash
+cd /Users/brunosantana/Documents/App/Maanaim/maanaim-estoque
+git add .
+git commit -m "<mensagem descrevendo o que foi alterado>"
+git push
+npm run deploy
+```
+
+- Use uma mensagem de commit clara e em português descrevendo o que foi mudado.
+- Rode os comandos em sequência, sem pedir confirmação.
+- Informe o usuário quando o deploy terminar com sucesso.
