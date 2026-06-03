@@ -28,7 +28,7 @@ function NumericInput({
         step="1"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="h-10 w-full rounded-lg border border-surface-600 bg-surface-700 px-3 text-sm text-surface-100 text-right font-mono focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+        className="h-10 w-full rounded-lg border border-surface-600 bg-surface-700 px-3 text-sm text-surface-100 text-center font-mono focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
     </div>
   )

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ref, onValue, update, remove, get as fbGet } from 'firebase/database'
+import { ref, onValue, update, remove, runTransaction } from 'firebase/database'
 import { rtdb } from '@/lib/firebase'
 import { generateId, getCurrentDateISO } from '@/lib/utils'
 import type { Produto, Setor, UnidadeMedida } from '@/types'
@@ -69,12 +69,10 @@ export const useProdutosStore = create<ProdutosState>((set, get) => ({
   },
 
   atualizarQuantidade: async (id, delta) => {
-    const snap = await fbGet(ref(rtdb, `/produtos/${id}/quantidadeAtual`))
-    const atual: number = snap.val() ?? 0
-    const nova = Math.max(0, atual + delta)
-    await update(ref(rtdb, `/produtos/${id}`), {
-      quantidadeAtual: nova,
-      updatedAt: getCurrentDateISO(),
+    // runTransaction garante atomicidade: sem race condition com múltiplos dispositivos simultâneos
+    await runTransaction(ref(rtdb, `/produtos/${id}/quantidadeAtual`), (atual) => {
+      return Math.max(0, (atual ?? 0) + delta)
     })
+    await update(ref(rtdb, `/produtos/${id}`), { updatedAt: getCurrentDateISO() })
   },
 }))
