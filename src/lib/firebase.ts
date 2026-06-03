@@ -3,7 +3,7 @@ import { getAuth } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyD86NAom0JEc-hFoD3ma4nfiZw6iCZNNe8',
+  apiKey: 'AIzaSyD86NAom0JEc-hFoD3ma4nfiZw6iCZNNe0',
   authDomain: 'maanaim-e98b5.firebaseapp.com',
   databaseURL: 'https://maanaim-e98b5-default-rtdb.firebaseio.com',
   projectId: 'maanaim-e98b5',
