@@ -87,7 +87,25 @@ export const useAuthStore = create<AuthState>((set) => ({
         set({ firebaseUser: null, userData: null, authLoading: false })
         return
       }
-      const userData = await fetchUserData(user.uid)
+      let userData = await fetchUserData(user.uid)
+
+      // Se o admin fez login mas não tem registro no RTDB, cria automaticamente
+      if (!userData && user.email === 'admin@admin.com') {
+        try {
+          await fbSet(ref(rtdb, `/usuarios/${user.uid}`), {
+            nome: 'Administrador',
+            email: 'admin@admin.com',
+            equipe: 'ADMIN',
+            role: 'admin',
+            aprovado: true,
+            createdAt: getCurrentDateISO(),
+          })
+          userData = await fetchUserData(user.uid)
+        } catch {
+          // ignora se o RTDB ainda não permitir
+        }
+      }
+
       set({ firebaseUser: user, userData, authLoading: false })
     })
 
@@ -105,6 +123,8 @@ export const useAuthStore = create<AuthState>((set) => ({
         'auth/user-not-found': 'Usuário não encontrado.',
         'auth/wrong-password': 'Senha incorreta.',
         'auth/too-many-requests': 'Muitas tentativas. Tente novamente mais tarde.',
+        'auth/operation-not-allowed': 'Login por e-mail não está habilitado no Firebase. Ative em Authentication → Sign-in method.',
+        'auth/invalid-email': 'E-mail inválido.',
       }
       set({ error: messages[err.code ?? ''] ?? 'Erro ao fazer login.' })
       throw e
