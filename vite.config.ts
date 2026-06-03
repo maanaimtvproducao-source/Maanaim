@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
-const APP_VERSION = '0.5'
+const APP_VERSION = '0.6'
 
 export default defineConfig({
   base: '/Maanaim/',

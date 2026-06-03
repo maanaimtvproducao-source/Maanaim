@@ -39,6 +39,13 @@
     box-sizing: border-box;
   }
 
+  /* Impede auto-zoom do iOS ao focar inputs (font-size < 16px dispara zoom) */
+  @media (max-width: 639px) {
+    input, select, textarea {
+      font-size: 16px;
+    }
+  }
+
   html {
     -webkit-tap-highlight-color: transparent;
     scroll-behavior: smooth;

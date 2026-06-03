@@ -121,7 +121,7 @@ export function UsuariosPage() {
       ) : (
         <div className="space-y-2">
           {filtrados.map((u) => (
-            <Card key={u.uid} variant="bordered" className="flex items-center gap-4">
+            <Card key={u.uid} variant="bordered" className="flex flex-col sm:flex-row sm:items-center gap-3">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="text-sm font-semibold text-surface-100">{u.nome}</p>
@@ -152,6 +152,7 @@ export function UsuariosPage() {
                   <Button
                     variant="success"
                     size="sm"
+                    className="flex-1 sm:flex-none"
                     onClick={() => setAcao({ tipo: 'aprovar', uid: u.uid, nome: u.nome })}
                   >
                     <CheckCircle size={14} />
@@ -161,6 +162,7 @@ export function UsuariosPage() {
                 <Button
                   variant="danger"
                   size="sm"
+                  className="flex-1 sm:flex-none"
                   onClick={() => setAcao({ tipo: 'rejeitar', uid: u.uid, nome: u.nome })}
                 >
                   <XCircle size={14} />
